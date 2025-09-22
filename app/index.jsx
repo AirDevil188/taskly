@@ -1,13 +1,20 @@
-import { StyleSheet, Text, ScrollView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  TextInput,
+  FlatList,
+  View,
+} from "react-native";
 import { theme } from "../theme";
 import { ShoppingListItem } from "../components/ShoppingListItem";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 
 const initialList = [
-  { id: 1, name: "Coffee" },
-  { id: 2, name: "Tea" },
-  { id: 3, name: "Milk" },
+  // { id: 1, name: "Coffee" },
+  // { id: 2, name: "Tea" },
+  // { id: 3, name: "Milk" },
 ];
 
 export default function App() {
@@ -26,23 +33,30 @@ export default function App() {
   };
 
   return (
-    <ScrollView
+    <FlatList
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       stickyHeaderIndices={[0]}
-    >
-      <TextInput
-        style={styles.textInput}
-        placeholder="E.g. Coffee"
-        value={value}
-        onChangeText={setValue}
-        returnKeyType="done"
-        onSubmitEditing={handleSubmit}
-      />
-      {shoppingList.map((todo) => (
-        <ShoppingListItem text={todo.name} key={todo.id} />
-      ))}
-    </ScrollView>
+      ListEmptyComponent={
+        <View style={styles.listEmptyContainer}>
+          <Text>Your shopping list is empty</Text>
+        </View>
+      }
+      ListHeaderComponent={
+        <TextInput
+          value={value}
+          style={styles.textInput}
+          onChangeText={setValue}
+          placeholder="E.g Coffee"
+          onSubmitEditing={handleSubmit}
+          returnKeyType="done"
+        />
+      }
+      data={shoppingList}
+      renderItem={({ item }) => {
+        return <ShoppingListItem text={item.name} />;
+      }}
+    />
   );
 }
 
@@ -54,6 +68,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingBottom: 24,
+  },
+  listEmptyContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 18,
   },
   textInput: {
     borderColor: theme.colorLightGrey,
