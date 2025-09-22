@@ -7,6 +7,11 @@ module.exports = defineConfig([
   expoConfig,
   eslintPluginPrettierRecommended,
   {
+    plugins: ["prettier", "react-native"],
     ignores: ["dist/*"],
+    rules: {
+      "prettier/prettier": "error",
+      "react-native/no-unused-styles": "error",
+    },
   },
 ]);
