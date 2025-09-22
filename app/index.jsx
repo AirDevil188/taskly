@@ -7,9 +7,6 @@ export default function App() {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.navigate("/idea")}>
-        <Text>Go to /idea</Text>
-      </TouchableOpacity>
       <ShoppingListItem text={"Coffee"} />
       <ShoppingListItem text={"Tea"} isCompleted />
       <ShoppingListItem text={"Sugar"} isCompleted />
