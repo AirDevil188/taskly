@@ -1,7 +1,8 @@
 import { TouchableOpacity, View, Text, StyleSheet, Alert } from "react-native";
 import { theme } from "../theme";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 export function ShoppingListItem(props) {
-  console.log(props.isCompleted);
   const handleDelete = () => {
     Alert.alert(
       "Are you sure you want to delete this?",
@@ -34,14 +35,13 @@ export function ShoppingListItem(props) {
       >
         {props.text}
       </Text>
-      <TouchableOpacity
-        onPress={props.handleDelete}
-        style={[
-          styles.button,
-          props.isCompleted ? styles.buttonComplete : null,
-        ]}
-      >
-        <Text style={[styles.buttonText]}>Delete</Text>
+      <TouchableOpacity onPress={props.handleDelete}>
+        <Ionicons
+          name="close-circle"
+          size={24}
+          color={props.isCompleted ? theme.colorGrey : theme.colorRed}
+          onPress={handleDelete}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: theme.colorCerulean,
     paddingVertical: 16,
-    paddingHorizontal: 8,
+    paddingHorizontal: 18,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -64,19 +64,6 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 18,
     fontWeight: "200",
-  },
-  button: {
-    backgroundColor: theme.colorBlack,
-    padding: 8,
-    borderRadius: 6,
-  },
-  buttonText: {
-    color: theme.colorWhite,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-  },
-  buttonComplete: {
-    backgroundColor: theme.colorGrey,
   },
   completedText: {
     textDecorationLine: "line-through",
