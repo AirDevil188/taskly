@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { theme } from "../theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Feather from "@expo/vector-icons/Feather";
 
 export function ShoppingListItem(props) {
   const onDelete = () => {
@@ -35,14 +36,22 @@ export function ShoppingListItem(props) {
       ]}
       onPress={props.handleToggleComplete}
     >
-      <Text
-        style={[
-          styles.itemText,
-          props.isCompleted ? styles.completedText : null,
-        ]}
-      >
-        {props.text}
-      </Text>
+      <View style={styles.row}>
+        <Feather
+          name={props.isCompleted ? "check" : "circle"}
+          size={24}
+          color={props.isCompleted ? theme.colorGrey : theme.colorCerulean}
+        />
+        <Text
+          style={[
+            styles.itemText,
+            props.isCompleted ? styles.completedText : null,
+          ]}
+        >
+          {props.text}
+        </Text>
+      </View>
+
       <TouchableOpacity onPress={props.handleDelete}>
         <Ionicons
           name="close-circle"
@@ -72,9 +81,15 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 18,
     fontWeight: "200",
+    flex: 1,
   },
   completedText: {
     textDecorationLine: "line-through",
     textDecorationColor: theme.colorGrey,
+  },
+  row: {
+    flexDirection: "row",
+    gap: 8,
+    flex: 1,
   },
 });
