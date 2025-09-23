@@ -3,14 +3,14 @@ import { theme } from "../theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export function ShoppingListItem(props) {
-  const handleDelete = () => {
+  const onDelete = () => {
     Alert.alert(
       "Are you sure you want to delete this?",
       "It will be gone for good",
       [
         {
           text: "Yes",
-          onPress: () => console.log("Ok deleting"),
+          onPress: () => props.handleDelete(),
           style: "destructive",
         },
         {
@@ -40,7 +40,7 @@ export function ShoppingListItem(props) {
           name="close-circle"
           size={24}
           color={props.isCompleted ? theme.colorGrey : theme.colorRed}
-          onPress={handleDelete}
+          onPress={onDelete}
         />
       </TouchableOpacity>
     </View>
