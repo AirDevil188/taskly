@@ -11,11 +11,7 @@ import { ShoppingListItem } from "../components/ShoppingListItem";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 
-const initialList = [
-  { id: 1, name: "Coffee", completed: false },
-  { id: 2, name: "Tea", completed: false },
-  { id: 3, name: "Milk", completed: false },
-];
+const initialList = [];
 
 export default function App() {
   const [value, setValue] = useState("");
@@ -24,7 +20,12 @@ export default function App() {
   const handleSubmit = () => {
     if (value) {
       const newShoppingList = [
-        { id: new Date().toISOString(), name: value, completed: false },
+        {
+          id: new Date().toISOString(),
+          name: value,
+          completed: false,
+          lastUpdatedTimestamp: Date.now(),
+        },
         ...shoppingList,
       ];
       setShoppingList(newShoppingList);
@@ -43,6 +44,7 @@ export default function App() {
         return {
           ...item,
           completed: item.completed ? false : Date.now(),
+          lastUpdatedTimestamp: Date.now(),
         };
       }
       return item;
@@ -70,7 +72,7 @@ export default function App() {
           returnKeyType="done"
         />
       }
-      data={shoppingList}
+      data={orderShoppingList(shoppingList)}
       renderItem={({ item }) => {
         return (
           <ShoppingListItem
@@ -83,6 +85,28 @@ export default function App() {
       }}
     />
   );
+}
+
+function orderShoppingList(shoppingList) {
+  return shoppingList.sort((item1, item2) => {
+    if (item1.completed && item2.completed) {
+      return item2.completed - item1.completed;
+    }
+
+    if (item1.completed && !item2.completed) {
+      return 1;
+    }
+
+    if (!item1.completed && item2.completed) {
+      return -1;
+    }
+
+    if (!item1.completed && !item2.completed) {
+      return item2.lastUpdatedTimestamp - item1.lastUpdatedTimestamp;
+    }
+
+    return 0;
+  });
 }
 
 const styles = StyleSheet.create({
