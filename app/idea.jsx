@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { theme } from "../theme";
 
 export default function IdeaScreen() {
   return (
