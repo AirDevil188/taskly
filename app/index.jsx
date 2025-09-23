@@ -12,9 +12,9 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 
 const initialList = [
-  // { id: 1, name: "Coffee" },
-  // { id: 2, name: "Tea" },
-  // { id: 3, name: "Milk" },
+  { id: 1, name: "Coffee", completed: false },
+  { id: 2, name: "Tea", completed: false },
+  { id: 3, name: "Milk", completed: false },
 ];
 
 export default function App() {
@@ -24,7 +24,7 @@ export default function App() {
   const handleSubmit = () => {
     if (value) {
       const newShoppingList = [
-        { id: new Date().toISOString(), name: value },
+        { id: new Date().toISOString(), name: value, completed: false },
         ...shoppingList,
       ];
       setShoppingList(newShoppingList);
@@ -34,6 +34,19 @@ export default function App() {
 
   const handleDelete = (id) => {
     const newShoppingList = shoppingList.filter((item) => item.id !== id);
+    setShoppingList(newShoppingList);
+  };
+
+  const handleToggleComplete = (id) => {
+    const newShoppingList = shoppingList.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          completed: item.completed ? false : Date.now(),
+        };
+      }
+      return item;
+    });
     setShoppingList(newShoppingList);
   };
 
@@ -63,6 +76,8 @@ export default function App() {
           <ShoppingListItem
             text={item.name}
             handleDelete={() => handleDelete(item.id)}
+            handleToggleComplete={() => handleToggleComplete(item.id)}
+            isCompleted={Boolean(item.completed)}
           />
         );
       }}

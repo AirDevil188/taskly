@@ -1,4 +1,11 @@
-import { TouchableOpacity, View, Text, StyleSheet, Alert } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Pressable,
+} from "react-native";
 import { theme } from "../theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -21,11 +28,12 @@ export function ShoppingListItem(props) {
     );
   };
   return (
-    <View
+    <Pressable
       style={[
         styles.itemContainer,
         props.isCompleted ? styles.completedContainer : undefined,
       ]}
+      onPress={props.handleToggleComplete}
     >
       <Text
         style={[
@@ -43,7 +51,7 @@ export function ShoppingListItem(props) {
           onPress={onDelete}
         />
       </TouchableOpacity>
-    </View>
+    </Pressable>
   );
 }
 
